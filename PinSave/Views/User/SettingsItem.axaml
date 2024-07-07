@@ -1,0 +1,19 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="300" d:DesignHeight="60"
+             x:Class="PinSave.Views.User.SettingsItem"
+             ClipToBounds="True"
+             CornerRadius="10"
+             Background="{DynamicResource SystemChromeLowColor}" 
+             Margin="0 2"
+             x:Name="US">
+  <DockPanel  HorizontalAlignment="Center">
+    <StackPanel Width="250"  HorizontalAlignment="Center" VerticalAlignment="Center" DockPanel.Dock="Left" Orientation="Vertical">
+      <TextBlock Margin="5 0 0 0" FontFamily="{StaticResource Oswald}" Text="{Binding TextHeader, RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl}}" FontSize="18"/>
+      <TextBlock Margin="5 2 0 2" FontFamily="{StaticResource Oswald}" FontWeight="Thin" MaxLines="3" TextWrapping="Wrap" MaxWidth="250" Text="{Binding TextHint, RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl}}" FontSize="12"/>
+    </StackPanel>
+    <CheckBox IsChecked="{Binding IsChecked, RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl}}" DockPanel.Dock="Right"/>
+  </DockPanel>
+</UserControl>

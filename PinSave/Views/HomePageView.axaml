@@ -1,0 +1,113 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:anim="https://github.com/whistyun/AnimatedImage.Avalonia"
+             xmlns:vm="clr-namespace:PinSave.ViewModels"
+             xmlns:m="clr-namespace:PinSave.Models.Contents"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:local="clr-namespace:PinSave"
+             xmlns:user="clr-namespace:PinSave.Views.User"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="500"
+             x:Class="PinSave.Views.HomePageView"
+             x:DataType="vm:HomePageViewModel">
+    <Design.DataContext>
+        <vm:HomePageViewModel />
+    </Design.DataContext>
+    <Grid RowDefinitions="125, 10, 84, *" HorizontalAlignment="Center">
+        <!--Block Search-->
+        <Border Grid.Row="0" CornerRadius="5">
+            <StackPanel VerticalAlignment="Top">
+                <!--Header text-->
+                <TextBlock Margin="0 5 0 0" FontFamily="{StaticResource Oswald}" Text="PinSave" FontSize="25"
+                           HorizontalAlignment="Center" />
+
+                <StackPanel Margin="0 10 0 0" HorizontalAlignment="Center" Orientation="Horizontal">
+                    <!--Preloader-->
+                    <Image VerticalAlignment="Top"
+                           anim:ImageBehavior.AnimatedSource="avares://PinSave/Assets/Preloaders/circle.gif" Width="30"
+                           Height="30" IsVisible="{Binding PreloaderVisible}" />
+
+                    <!--Search-->
+                    <StackPanel Orientation="Vertical">
+                        <TextBox VerticalContentAlignment="Center" FontFamily="{StaticResource Oswald}"
+                                 Text="{Binding LinkBoard}" Width="580"
+                                 Watermark="https://ru.pinterest.com/bla-bla/nice-board" />
+                        <ProgressBar IsVisible="{Binding ProgressBarVisible}" ProgressTextFormat="Выполнено ({1:0}%)"
+                                     ShowProgressText="True" Margin="0 5 0 0" Width="580" Height="15" FontSize="10"
+                                     FontFamily="{StaticResource Oswald}" Minimum="0" Maximum="100"
+                                     Value="{Binding ProgressBarValue}" />
+                    </StackPanel>
+
+                    <Button IsDefault="True" VerticalAlignment="Top" Margin="5 0 0 0" Width="35" Command="{Binding GetPinsCommand}"
+                            Height="35" HorizontalContentAlignment="Center" HorizontalAlignment="Center">
+                        <PathIcon Data="{StaticResource Search}" Width="35" Height="35" />
+                    </Button>
+                    <!--Optional-->
+                </StackPanel>
+                <DockPanel Margin="10 5 10 0">
+                    <StackPanel Orientation="Horizontal" DockPanel.Dock="Left">
+                        <CheckBox FontFamily="{StaticResource Oswald}"
+                                  IsChecked="{Binding TempListItems.AllCheck, Mode=TwoWay}"
+                                  IsVisible="{Binding IsVisibleAll}" Content="Выбрать всё"
+                                  Command="{Binding CheckAllPinsInSectionCommand}" />
+                    </StackPanel>
+                    <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" DockPanel.Dock="Right">
+                        <Button Command="{Binding DownloadPinsCommand}" IsVisible="{Binding IsVisibleAll}"
+                                FontFamily="{StaticResource Oswald}" Content="Save" Margin="0 0 5 0" />
+                    </StackPanel>
+                </DockPanel>
+            </StackPanel>
+        </Border>
+
+        <!--Block Separator-->
+        <Separator Height="3" Margin="5 0 5 0" CornerRadius="10" Grid.Row="1" />
+
+        <!--Block sections-->
+        <ScrollViewer HorizontalScrollBarVisibility="Auto" Grid.Row="2" Margin="10 0 10 0">
+            <ListBox Background="Transparent" CornerRadius="10" HorizontalAlignment="Center" VerticalAlignment="Center"
+                     ItemsSource="{Binding BoardSections}" SelectedItem="{Binding SelectedListItem}">
+                <ListBox.Styles>
+                    <Style Selector="ListBoxItem">
+                        <Setter Property="CornerRadius" Value="10" />
+                        <Setter Property="Padding" Value="1" />
+                    </Style>
+                </ListBox.Styles>
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal" />
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+                <ListBox.ItemTemplate>
+                    <DataTemplate DataType="{x:Type m:TemplateSections}">
+                        <local:SectionControl Pin="{Binding Path=Img}" Caption="{Binding Path=Caption}"
+                                              Count="{Binding Path=Count}" />
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </ScrollViewer>
+
+
+        <!--Block pins-->
+        <ScrollViewer Margin="10" HorizontalContentAlignment="Center" Grid.Row="3">
+            <Border HorizontalAlignment="Center" ClipToBounds="True" CornerRadius="0 0 5 5">
+                <ItemsRepeater HorizontalAlignment="Center" PropertyChanged="PinsRepeater_PropertyChanged"
+                               ItemsSource="{Binding TempListItems.ContentModels}">
+                    <ItemsRepeater.Layout>
+                        <WrapLayout HorizontalSpacing="10" VerticalSpacing="10" />
+                    </ItemsRepeater.Layout>
+                    <ItemsRepeater.ItemTemplate>
+                        <DataTemplate>
+                            <Border CornerRadius="10" ClipToBounds="True">
+                                <user:PinControl Url="{Binding Path=Images._170X.Url}"
+                                                 DominantColor="{Binding Path=DominantColor}"
+                                                 Description="{Binding Path=GridTitle}"
+                                                 Select="{Binding Mode=TwoWay, Path=Checked}"
+                                                 Type="{Binding Path=Type}" />
+                            </Border>
+                        </DataTemplate>
+                    </ItemsRepeater.ItemTemplate>
+                </ItemsRepeater>
+            </Border>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

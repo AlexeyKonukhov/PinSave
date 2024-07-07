@@ -1,0 +1,6 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <!-- Add Resources Here -->
+  <SolidColorBrush Color="{DynamicResource ThemeAccentBrush}" x:Key="Back"/>
+  <StaticResource x:Key="BackgroundTest" ResourceKey="Back"/>
+</ResourceDictionary>

@@ -1,0 +1,41 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:PinSave.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="1120" d:DesignHeight="600"
+        Width="1120" Height="600"
+        x:Class="PinSave.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Icon="/Assets/logo.ico"
+        Title="PinSave"
+        WindowStartupLocation="CenterScreen"
+        ExtendClientAreaToDecorationsHint="True"
+        CornerRadius="10">
+    <Design.DataContext>
+        <vm:MainWindowViewModel/>
+    </Design.DataContext>
+  <SplitView OpenPaneLength="200" 
+             CompactPaneLength="45"
+             DisplayMode="CompactInline">
+    <SplitView.Pane>
+      <StackPanel>
+        <ListBox CornerRadius="5" ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedListItem}">
+          <ListBox.ItemTemplate>
+            <DataTemplate DataType="{x:Type vm:MenuListItemTemplate}">
+              <StackPanel Spacing="15" Orientation="Horizontal">
+                <PathIcon Data="{Binding Icon}" HorizontalAlignment="Left"/>
+                <TextBlock Text="{Binding Label}" FontFamily="{StaticResource Oswald}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+              </StackPanel>
+            </DataTemplate>
+          </ListBox.ItemTemplate>
+        </ListBox>
+      </StackPanel>
+    </SplitView.Pane>
+
+    <SplitView.Content>
+      <TransitioningContentControl Content="{Binding CurrentPage}"/>
+    </SplitView.Content>
+  </SplitView>
+  
+</Window>

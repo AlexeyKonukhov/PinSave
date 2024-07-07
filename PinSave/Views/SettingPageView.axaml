@@ -1,0 +1,21 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:vm="clr-namespace:PinSave.ViewModels"
+             xmlns:local="clr-namespace:PinSave.Views.User"
+             xmlns:asyncImageLoader="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="PinSave.Views.SettingPageView">
+  <Design.DataContext>
+    <vm:SettingPageViewModel/>
+  </Design.DataContext>
+  <ScrollViewer Margin="20 20">
+    <StackPanel HorizontalAlignment="Left" Margin="10" Orientation="Vertical">
+      <TextBlock Text="В разработке" Foreground="Red" HorizontalAlignment="Center"/>
+      <!--Path to Save Pins-->
+      <local:SettingsItem UserTag="VariableTheme" IsChecked="{Binding IsDarkTheme, Mode=TwoWay}" TextHeader="{Binding DarkThemeHeader}" TextHint="{Binding DarkThemeHint}"/>
+      <local:SettingsItem UserTag="VariableFolder" IsChecked="{Binding IsVariableSections, Mode=TwoWay}" TextHeader="{Binding VariableSectionsHeader}" TextHint="{Binding VariableSectionsHint}"/>
+    </StackPanel>
+  </ScrollViewer>
+</UserControl>
